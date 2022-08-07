@@ -5,8 +5,8 @@ import General from "./components/General";
 class App extends Component {
   render() {
     return (
-      <div className="flex flex-col items-center py-8 gap-8">
-        <h1 className="text-3xl font-bold">CV Application</h1>
+      <div className="flex flex-col items-center py-8">
+        <h1 className="text-7xl font-bold mb-12">CV Application</h1>
         <ul className="steps grid-cols-[minmax(150px,_1fr)]">
           <li className="step step-primary">General</li>
           <li className="step step-primary">Educations</li>
@@ -14,6 +14,10 @@ class App extends Component {
           <li className="step">Review</li>
         </ul>
         <General />
+        <div className="mt-4 self-end mr-14 flex gap-2">
+          <button className="btn btn-ghost">Back</button>
+          <button className="btn btn-primary">Save and Continue</button>
+        </div>
       </div>
     );
   }
