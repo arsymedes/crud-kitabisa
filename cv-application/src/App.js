@@ -1,6 +1,7 @@
 import { Component } from "react";
 import "./App.css";
 import General from "./components/General";
+import Education from "./components/Education"
 
 class App extends Component {
   render() {
@@ -13,7 +14,7 @@ class App extends Component {
           <li className="step">Experience</li>
           <li className="step">Review</li>
         </ul>
-        <General />
+        <Education />
         <div className="mt-4 self-end mr-14 flex gap-2">
           <button className="btn btn-ghost">Back</button>
           <button className="btn btn-primary">Save and Continue</button>
