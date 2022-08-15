@@ -15,7 +15,7 @@ class Input extends Component {
           value={this.props.value}
           placeholder="Type here"
           onChange={(e) => {
-            this.props.handleChange(e, this.props.category);
+            this.props.handleChange(e, this.props.category, this.props.id);
           }}
           className="input input-bordered w-full h-9 input-primary font-semibold"
         />
@@ -39,7 +39,7 @@ class Radio extends Component {
             checked={this.props.value === element}
             className="radio checked:bg-primary"
             onChange={(e) => {
-              this.props.handleChange(e, this.props.category);
+              this.props.handleChange(e, this.props.category, this.props.id);
             }}
           />
           <span className="label-text">{element}</span>
@@ -84,7 +84,7 @@ class Select extends Component {
         <select
           value={this.props.value}
           onChange={(e) => {
-            this.props.handleChange(e, this.props.category);
+            this.props.handleChange(e, this.props.category, this.props.id);
           }}
           name={this.props.name}
           className="select min-h-6 h-9 select-primary w-full"

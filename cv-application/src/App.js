@@ -11,7 +11,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      tab: 2,
+      tab: 1,
       tabs: ["General", "Education", "Experience", "Review"],
       general: {
         fullName: "",
@@ -25,6 +25,7 @@ class App extends Component {
       },
       educations: [],
       education: {
+        id: uniqid(),
         schoolName: "",
         fieldOfStudy: "",
         degree: "",
@@ -34,16 +35,21 @@ class App extends Component {
       },
       experiences: [],
       experience: {
+        id: uniqid(),
         title: "",
         companyName: "",
         location: "",
-        employmentType: "",
+        employmentType: "Select an Option",
         startYear: "",
         endYear: "",
       },
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleListChange = this.handleListChange.bind(this);
+    this.addRecord = this.addRecord.bind(this);
+    this.next = this.next.bind(this);
+    this.back = this.back.bind(this);
   }
 
   handleChange(event, category) {
@@ -58,6 +64,80 @@ class App extends Component {
         [name]: value,
       },
     }));
+  }
+
+  handleListChange(event, category, id) {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    if (category === "Education") {
+      let list = [...this.state.educations];
+      let index = list.findIndex((el) => el.id === id);
+      list[index] = {
+        ...list[index],
+        [name]: value,
+      };
+      this.setState({ educations: list });
+    } else if (category === "Experience") {
+      let list = [...this.state.experiences];
+      let index = list.findIndex((el) => el.id === id);
+      list[index] = {
+        ...list[index],
+        [name]: value,
+      };
+      this.setState({ experiences: list });
+    }
+  }
+
+  deleteListChange(category, id) {
+    if (category === "Education") {
+      let list = this.state.educations.filter((el) => el.id !== id);
+      this.setState({ educations: list });
+    } else if (category === "Experience") {
+      let list = this.state.experiences.filter((el) => el.id !== id);
+      this.setState({ educations: list });
+    }
+  }
+
+  addRecord(type) {
+    if (type === "Education") {
+      this.setState((state) => ({
+        education: {
+          id: uniqid(),
+          schoolName: "",
+          fieldOfStudy: "",
+          degree: "",
+          grade: "",
+          startYear: "",
+          endYear: "",
+        },
+        educations: [...state.educations, state.education],
+      }));
+    } else if (type === "Experience") {
+      this.setState((state) => ({
+        experience: {
+          id: uniqid(),
+          title: "",
+          companyName: "",
+          location: "",
+          employmentType: "",
+          startYear: "",
+          endYear: "",
+        },
+        experiences: [...state.experiences, state.experience],
+      }));
+    }
+  }
+
+  next() {
+    this.setState((prevState) => ({ tab: prevState.tab + 1 }));
+  }
+
+  back() {
+    if (this.state.tab > 0) {
+      this.setState((prevState) => ({ tab: prevState.tab - 1 }));
+    }
   }
 
   steps() {
@@ -84,18 +164,32 @@ class App extends Component {
       return (
         <Education
           handleChange={this.handleChange}
+          handleListChange={this.handleListChange}
+          addRecord={this.addRecord}
           form={this.state.education}
+          forms={this.state.educations}
         />
       );
     if (this.state.tab === 2)
       return (
         <Experience
           handleChange={this.handleChange}
+          handleListChange={this.handleListChange}
+          addRecord={this.addRecord}
           form={this.state.experience}
+          forms={this.state.experiences}
         />
       );
     if (this.state.tab === 3)
-      return <Review handleChange={this.handleChange} />;
+      return (
+        <Review
+          handleChange={this.handleChange}
+          handleListChange={this.handleListChange}
+          addRecord={this.addRecord}
+          form={this.state.experience}
+          forms={this.state.experiences}
+        />
+      );
   }
 
   render() {
@@ -105,8 +199,12 @@ class App extends Component {
         {this.steps()}
         {this.mainContent()}
         <div className="mt-4 self-end mr-14 flex gap-2">
-          <button className="btn btn-ghost">Back</button>
-          <button className="btn btn-primary">Save and Continue</button>
+          <button className="btn btn-ghost" onClick={this.back}>
+            Back
+          </button>
+          <button className="btn btn-primary" onClick={this.next}>
+            Save and Continue
+          </button>
         </div>
       </div>
     );
