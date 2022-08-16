@@ -10,11 +10,15 @@ class Education extends Component {
             form={this.props.form}
             handleChange={this.props.handleChange}
             category="Education"
+            isDeletable={false}
+            num={this.props.forms.length + 1}
           />
           <div className="modal-action">
             <label
               htmlFor="education-modal"
-              onClick={() => this.props.addRecord("Education")}
+              onClick={() => {
+                this.props.addRecord("Education");
+              }}
               className="btn btn-secondary"
             >
               Add
@@ -29,28 +33,34 @@ class Education extends Component {
   }
 
   iterator() {
-    const newList = this.props.forms.map((element) => (
+    const newList = this.props.forms.map((element, index) => (
       <AddSection
         form={element}
         category="Education"
         handleChange={this.props.handleListChange}
         key={element.id}
         id={element.id}
+        isDeletable={true}
+        deleteListChange={this.props.deleteListChange}
+        num={index + 1}
+        isDisabled={this.props.isDisabled}
       />
     ));
-    return newList
+    return newList;
   }
 
   render() {
     return (
-      <div className="box-border shadow-lg w-11/12 px-16 py-12 flex flex-col">
+      <div className={`box-border shadow-lg w-11/12 px-16 py-12 flex flex-col ${this.props.isDisabled ? "opacity-80" : ""}`}>
         <h2 className="font-bold text-3xl mb-6">Educations</h2>
         <form action="" className="">
           {this.iterator()}
         </form>
         <label
           htmlFor="education-modal"
-          className="btn btn-ghost font-bold mt-6 modal-button"
+          className={`btn btn-ghost font-bold mt-6 modal-button ${
+            this.props.isDisabled ? "hidden" : ""
+          }`}
         >
           Add Education
         </label>
@@ -62,15 +72,51 @@ class Education extends Component {
 }
 
 class AddSection extends Component {
+  deleteButton(cond) {
+    if (cond) {
+      return (
+        <button
+          type="button"
+          className={`btn btn-outline btn-error btn-square ${
+            this.props.isDisabled ? "hidden" : ""
+          }`}
+          onClick={() => {
+            this.props.deleteListChange("Education", this.props.id);
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      );
+    }
+  }
+
   render() {
     const category = this.props.category;
     return (
       <div>
         <div className="flex justify-between">
-          <h3 className="text-lg font-semibold my-2">School 1</h3>
-          <button type="button" className="btn btn-outline btn-ghost btn-square"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+          <h3 className="text-lg font-semibold my-2">
+            School {this.props.num}
+          </h3>
+          {this.deleteButton(this.props.isDeletable)}
         </div>
-        <fieldset className="grid grid-cols-2 gap-x-16">
+        <fieldset
+          className="grid grid-cols-2 gap-x-16"
+          disabled={this.props.isDisabled}
+        >
           <Input
             id={this.props.id}
             title="School Name"

@@ -11,7 +11,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      tab: 1,
+      tab: 0,
       tabs: ["General", "Education", "Experience", "Review"],
       general: {
         fullName: "",
@@ -47,6 +47,7 @@ class App extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleListChange = this.handleListChange.bind(this);
+    this.deleteListChange = this.deleteListChange.bind(this)
     this.addRecord = this.addRecord.bind(this);
     this.next = this.next.bind(this);
     this.back = this.back.bind(this);
@@ -96,7 +97,7 @@ class App extends Component {
       this.setState({ educations: list });
     } else if (category === "Experience") {
       let list = this.state.experiences.filter((el) => el.id !== id);
-      this.setState({ educations: list });
+      this.setState({ experiences: list });
     }
   }
 
@@ -165,6 +166,7 @@ class App extends Component {
         <Education
           handleChange={this.handleChange}
           handleListChange={this.handleListChange}
+          deleteListChange={this.deleteListChange}
           addRecord={this.addRecord}
           form={this.state.education}
           forms={this.state.educations}
@@ -175,6 +177,7 @@ class App extends Component {
         <Experience
           handleChange={this.handleChange}
           handleListChange={this.handleListChange}
+          deleteListChange={this.deleteListChange}
           addRecord={this.addRecord}
           form={this.state.experience}
           forms={this.state.experiences}
@@ -186,8 +189,9 @@ class App extends Component {
           handleChange={this.handleChange}
           handleListChange={this.handleListChange}
           addRecord={this.addRecord}
-          form={this.state.experience}
-          forms={this.state.experiences}
+          form={this.state.general}
+          educationForms={this.state.educations}
+          experienceForms={this.state.experiences}
         />
       );
   }
