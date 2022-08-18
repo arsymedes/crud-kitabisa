@@ -9,7 +9,7 @@ class Experience extends Component {
           <AddSection
             form={this.props.form}
             handleChange={this.props.handleChange}
-            category="Experience"
+            category="experience"
             isDeletable={false}
             num={this.props.forms.length + 1}
           />
@@ -34,7 +34,7 @@ class Experience extends Component {
     const newList = this.props.forms.map((element, index) => (
       <AddSection
         form={element}
-        category="Experience"
+        category="experiences"
         handleChange={this.props.handleListChange}
         key={element.id}
         id={element.id}
@@ -74,6 +74,14 @@ class Experience extends Component {
 }
 
 class AddSection extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      points: [],
+    }
+  }
+
   deleteButton(cond) {
     if (cond) {
       return (
@@ -83,7 +91,7 @@ class AddSection extends Component {
             this.props.isDisabled ? "hidden" : ""
           }`}
           onClick={() => {
-            this.props.deleteListChange("Experience", this.props.id);
+            this.props.deleteListChange("experiences", this.props.id);
           }}
         >
           <svg
@@ -105,8 +113,27 @@ class AddSection extends Component {
     }
   }
 
+  pointsRender() {
+    const newList = this.props.form.points.map((element, index) => (
+      <Input
+        id={this.props.id}
+        name="points"
+        key={index}
+        value={element}
+        category={this.props.category}
+        handleChange={(event, category, value=null, id) => {
+          const newList = [...this.state.points]
+          newList[index] = event.target.value
+          this.setState({points: newList})
+          this.props.handleChange(event, category, newList, id)
+        }}
+      />
+    ))
+    return newList
+  }
+
   render() {
-    const category = "Experience";
+    const category = this.props.category;
     return (
       <div>
         <div className="flex justify-between">
@@ -138,6 +165,7 @@ class AddSection extends Component {
             id={this.props.id}
             title="Location"
             name="location"
+            desc="Includes City Name and Country of Residence. Example: Jakarta, Indonesia"
             value={this.props.form.location}
             category={category}
             handleChange={this.props.handleChange}
@@ -178,6 +206,11 @@ class AddSection extends Component {
             category={category}
             handleChange={this.props.handleChange}
           />
+        </fieldset>
+        <fieldset>
+          <h4 className="mt-4">Experience Descriptions</h4>
+          {this.pointsRender()}
+          <button type="button" className="btn btn-secondary btn-sm mt-4">Add Point</button>
         </fieldset>
       </div>
     );

@@ -1,7 +1,14 @@
 import { Component } from "react";
-import { Input, Radio } from "./Input";
+import { Input } from "./Input";
 
 class General extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isDisabled: this.props.isDisabled
+    }
+  }
   render() {
     const category = "General";
     return (
@@ -17,11 +24,11 @@ class General extends Component {
               category={category}
               handleChange={this.props.handleChange}
             />
-            <Radio
-              title="Gender"
-              name="gender"
-              options={["Male", "Female"]}
-              value={this.props.form.gender}
+            <Input
+              title="Email Address"
+              required="Required"
+              name="email"
+              value={this.props.form.email}
               category={category}
               handleChange={this.props.handleChange}
             />
@@ -34,43 +41,9 @@ class General extends Component {
               handleChange={this.props.handleChange}
             />
             <Input
-              title="Email Address"
-              required="Required"
-              name="email"
-              value={this.props.form.email}
-              category={category}
-              handleChange={this.props.handleChange}
-            />
-            <Input
-              title="Date of Birth"
-              required="Required"
-              desc="Date Format: DD-MM-YYYY"
-              name="dateOfBirth"
-              value={this.props.form.dateOfBirth}
-              category={category}
-              handleChange={this.props.handleChange}
-            />
-            <Input
-              title="Nationality"
-              required="Required"
-              name="nationality"
-              value={this.props.form.nationality}
-              category={category}
-              handleChange={this.props.handleChange}
-            />
-            <Input
-              title="ID Number"
-              required="Required"
-              desc="For Foreigners, Use Passport ID"
-              name="idNumber"
-              value={this.props.form.idNumber}
-              category={category}
-              handleChange={this.props.handleChange}
-            />
-            <Input
               title="Current Address"
               required="Required"
-              desc="Includes City Name and Country of Residence"
+              desc="Includes City Name and Country of Residence. Example: Jakarta, Indonesia"
               name="address"
               value={this.props.form.address}
               category={category}

@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Input } from "./Input";
+import { Input, Select } from "./Input";
 
 class Education extends Component {
   modalPopup() {
@@ -9,7 +9,7 @@ class Education extends Component {
           <AddSection
             form={this.props.form}
             handleChange={this.props.handleChange}
-            category="Education"
+            category="education"
             isDeletable={false}
             num={this.props.forms.length + 1}
           />
@@ -36,7 +36,7 @@ class Education extends Component {
     const newList = this.props.forms.map((element, index) => (
       <AddSection
         form={element}
-        category="Education"
+        category="educations"
         handleChange={this.props.handleListChange}
         key={element.id}
         id={element.id}
@@ -128,15 +128,25 @@ class AddSection extends Component {
           />
           <Input
             id={this.props.id}
-            title="Field of Study"
+            required="Required"
+            title="Field of Study / Major"
             name="fieldOfStudy"
             value={this.props.form.fieldOfStudy}
             category={category}
             handleChange={this.props.handleChange}
           />
-          <Input
+          <Select
             id={this.props.id}
+            required="required"
             title="Degree"
+            options={[
+              "Select an Option",
+              "Doctorate",
+              "Master's",
+              "Bachelor's",
+              "Diploma",
+              "High School",
+            ]}
             name="degree"
             value={this.props.form.degree}
             category={category}

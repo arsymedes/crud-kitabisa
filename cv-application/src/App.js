@@ -11,16 +11,12 @@ class App extends Component {
     super(props);
 
     this.state = {
-      tab: 0,
+      tab: 2,
       tabs: ["General", "Education", "Experience", "Review"],
       general: {
         fullName: "",
-        gender: "",
         phoneNumber: "",
         email: "",
-        dateOfBirth: "",
-        nationality: "",
-        idNumber: "",
         address: "",
       },
       educations: [],
@@ -42,6 +38,7 @@ class App extends Component {
         employmentType: "Select an Option",
         startYear: "",
         endYear: "",
+        points: ["Made the best react app in the world"],
       },
     };
 
@@ -53,52 +50,35 @@ class App extends Component {
     this.back = this.back.bind(this);
   }
 
-  handleChange(event, category) {
+  handleChange(event, category, value) {
     const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-    const smallCategory = category.toLowerCase();
+    console.log(category);
 
     this.setState((prevState) => ({
-      [smallCategory]: {
-        ...prevState[smallCategory],
+      [category]: {
+        ...prevState[category],
         [name]: value,
       },
     }));
   }
 
-  handleListChange(event, category, id) {
+  handleListChange(event, category, value, id) {
     const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-
-    if (category === "Education") {
-      let list = [...this.state.educations];
-      let index = list.findIndex((el) => el.id === id);
-      list[index] = {
-        ...list[index],
-        [name]: value,
-      };
-      this.setState({ educations: list });
-    } else if (category === "Experience") {
-      let list = [...this.state.experiences];
-      let index = list.findIndex((el) => el.id === id);
-      list[index] = {
-        ...list[index],
-        [name]: value,
-      };
-      this.setState({ experiences: list });
-    }
+    
+    let list = [...this.state[category]];
+    let index = list.findIndex((el) => el.id === id);
+    list[index] = {
+      ...list[index],
+      [name]: value,
+    };
+    this.setState({ [category]: list });
   }
 
   deleteListChange(category, id) {
-    if (category === "Education") {
-      let list = this.state.educations.filter((el) => el.id !== id);
-      this.setState({ educations: list });
-    } else if (category === "Experience") {
-      let list = this.state.experiences.filter((el) => el.id !== id);
-      this.setState({ experiences: list });
-    }
+    let list = this.state[category].filter((el) => el.id !== id);
+    this.setState({ [category]: list });
   }
 
   addRecord(type) {
@@ -123,6 +103,7 @@ class App extends Component {
           companyName: "",
           location: "",
           employmentType: "",
+          points: [],
           startYear: "",
           endYear: "",
         },
