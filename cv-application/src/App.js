@@ -4,6 +4,7 @@ import "./App.css";
 import General from "./components/General";
 import Education from "./components/Education";
 import Experience from "./components/Experience";
+import Info from "./Info";
 import Review from "./components/Review";
 
 class App extends Component {
@@ -11,15 +12,33 @@ class App extends Component {
     super(props);
 
     this.state = {
-      tab: 2,
-      tabs: ["General", "Education", "Experience", "Review"],
+      tab: 3,
+      tabs: ["General", "Education", "Experience", "Additional Information", "Review"],
       general: {
-        fullName: "",
-        phoneNumber: "",
-        email: "",
-        address: "",
+        fullName: "Ahmad Arsy",
+        phoneNumber: "08117850750",
+        email: "arsyahmda12@gmail.com",
+        address: "Jakarta, Indonesia",
       },
-      educations: [],
+      educations: [
+        {
+          id: uniqid(),
+          schoolName: "University of Indonesia",
+          fieldOfStudy: "Physics",
+          degree: "Bachelor's",
+          grade: "3.94",
+          startYear: "2020",
+          endYear: "2024",
+        },
+        {
+          id: uniqid(),
+          schoolName: "SMA Negeri 1 Palembang",
+          fieldOfStudy: "Science",
+          degree: "High School",
+          startYear: "2017",
+          endYear: "2020",
+        },
+      ],
       education: {
         id: uniqid(),
         schoolName: "",
@@ -29,7 +48,77 @@ class App extends Component {
         startYear: "",
         endYear: "",
       },
-      experiences: [],
+      experiences: [
+        {
+          id: uniqid(),
+          title: "Junior Web Developer",
+          companyName: "Google",
+          location: "Seattle, US",
+          employmentType: "Full Time",
+          startYear: "2022",
+          endYear: "Current",
+          points: [
+            {
+              id: uniqid(),
+              value: "Generated a total of 1 Billion Dollars in Revenue with 100% server UpTime using Microtransaction and Cryptocurrency",
+            },
+            {
+              id: uniqid(),
+              value: "Made the best react app in the world",
+            },
+            {
+              id: uniqid(),
+              value: "Generated a total of 1 morbillion dollars of revenue from the hit App, Morbin Time",
+            },
+          ],
+        },
+        {
+          id: uniqid(),
+          title: "Question Writer",
+          companyName: "Gredu",
+          location: "Jakarta, Indonesia",
+          employmentType: "Contract",
+          startYear: "2021",
+          endYear: "2021",
+          points: [
+            {
+              id: uniqid(),
+              value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in ex faucibus, sollicitudin lectus vel, porta orci. Donec a feugiat tortor.",
+            },
+            {
+              id: uniqid(),
+              value: "Made 10 Questions in 10 Minutes, the highest in the team",
+            },
+            {
+              id: uniqid(),
+              value: "Teached students all around the world the importance of Quadratic Formula",
+            },
+          ],
+        },
+        {
+          id: uniqid(),
+          title: "IOS Developer",
+          companyName: "Apple Developer Academy",
+          location: "Tangerang, Banten",
+          employmentType: "Full Time",
+          startYear: "2017",
+          endYear: "2020",
+          points: [
+            {
+              id: uniqid(),
+              value: "Made a fun little app that tells you how o make a great CV from scracth, available on IOS",
+            },
+            {
+              id: uniqid(),
+              value: "Fixed a critical bug in production that could've resulted in a catastrophic 1 Trillion Zimbabwe Dollars loss",
+            },
+            {
+              id: uniqid(),
+              value: "Aliquam erat volutpat. Donec quis odio eu sem feugiat congue id in arcu. Duis nisi ex, volutpat sed dolor a, aliquam blandit felis.",
+            },
+          ],
+        },
+      ],
       experience: {
         id: uniqid(),
         title: "",
@@ -40,6 +129,14 @@ class App extends Component {
         endYear: "",
         points: ["Made the best react app in the world"],
       },
+      infos: {
+        points: [
+          {
+            id: uniqid(),
+            value: "Chungus",
+          }
+        ]
+      }
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -53,7 +150,7 @@ class App extends Component {
   handleChange(event, category, value) {
     const target = event.target;
     const name = target.name;
-    console.log(category);
+    console.log(target);
 
     this.setState((prevState) => ({
       [category]: {
@@ -166,13 +263,12 @@ class App extends Component {
       );
     if (this.state.tab === 3)
       return (
+        <Info handleChange={this.handleChange} forms={this.state.infos}/>
+      )
+    if (this.state.tab === 4)
+      return (
         <Review
-          handleChange={this.handleChange}
-          handleListChange={this.handleListChange}
-          addRecord={this.addRecord}
-          form={this.state.general}
-          educationForms={this.state.educations}
-          experienceForms={this.state.experiences}
+          state={this.state}
         />
       );
   }

@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Input, Select } from "./Input";
+import uniqid from "uniqid"
 
 class Experience extends Component {
   modalPopup() {
@@ -49,11 +50,7 @@ class Experience extends Component {
 
   render() {
     return (
-      <div
-        className={`box-border shadow-lg w-11/12 px-16 py-12 flex flex-col ${
-          this.props.isDisabled ? "opacity-80" : ""
-        }`}
-      >
+      <div className={`box-border shadow-lg w-11/12 px-16 py-12 flex flex-col`}>
         <h2 className="font-bold text-3xl mb-6">Experience</h2>
         <form action="" className="">
           {this.iterator()}
@@ -75,11 +72,11 @@ class Experience extends Component {
 
 class AddSection extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      points: [],
-    }
+      points: [...this.props.form.points],
+    };
   }
 
   deleteButton(cond) {
@@ -118,18 +115,18 @@ class AddSection extends Component {
       <Input
         id={this.props.id}
         name="points"
-        key={index}
-        value={element}
+        key={element.id}
+        value={element.value}
         category={this.props.category}
-        handleChange={(event, category, value=null, id) => {
-          const newList = [...this.state.points]
-          newList[index] = event.target.value
-          this.setState({points: newList})
-          this.props.handleChange(event, category, newList, id)
+        handleChange={(event, category, value = null, id) => {
+          const newList = [...this.state.points];
+          newList[index].value = event.target.value;
+          this.setState({ points: newList });
+          this.props.handleChange(event, category, newList, id);
         }}
       />
-    ))
-    return newList
+    ));
+    return newList;
   }
 
   render() {
@@ -142,7 +139,10 @@ class AddSection extends Component {
           </h3>
           {this.deleteButton(this.props.isDeletable)}
         </div>
-        <fieldset className="grid grid-cols-2 gap-x-16" disabled={this.props.isDisabled}>
+        <fieldset
+          className="grid grid-cols-2 gap-x-16"
+          disabled={this.props.isDisabled}
+        >
           <Input
             id={this.props.id}
             title="Title"
@@ -210,7 +210,18 @@ class AddSection extends Component {
         <fieldset>
           <h4 className="mt-4">Experience Descriptions</h4>
           {this.pointsRender()}
-          <button type="button" className="btn btn-secondary btn-sm mt-4">Add Point</button>
+          <button
+            type="button"
+            name="points"
+            className="btn btn-secondary btn-sm mt-4"
+            onClick={(event) => {
+              const newList = [...this.state.points, {id: uniqid(), value: ""}];
+              this.setState({ points: newList });
+              this.props.handleChange(event, category, newList, this.props.id);
+            }}
+          >
+            Add Point
+          </button>
         </fieldset>
       </div>
     );
