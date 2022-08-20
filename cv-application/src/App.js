@@ -12,7 +12,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      tab: 3,
+      tab: 4,
       tabs: ["General", "Education", "Experience", "Additional Information", "Review"],
       general: {
         fullName: "Ahmad Arsy",
@@ -127,14 +127,22 @@ class App extends Component {
         employmentType: "Select an Option",
         startYear: "",
         endYear: "",
-        points: ["Made the best react app in the world"],
+        points: [],
       },
       infos: {
         points: [
           {
             id: uniqid(),
-            value: "Chungus",
-          }
+            value: "Technical Skills: HTML, CSS, JavaScript, React, SQL, Python, MongoDB, ExpressJS",
+          },
+          {
+            id: uniqid(),
+            value: "Languages: Indonesian (Native Proficiency), English (Professional Proficiency)",
+          },
+          {
+            id: uniqid(),
+            value: "Awards: Gold Medal in ONMIPA Physics Olympiad, Honorable Mention in IdPHO Physics Olympiad in Russia",
+          },
         ]
       }
     };
@@ -150,7 +158,6 @@ class App extends Component {
   handleChange(event, category, value) {
     const target = event.target;
     const name = target.name;
-    console.log(target);
 
     this.setState((prevState) => ({
       [category]: {

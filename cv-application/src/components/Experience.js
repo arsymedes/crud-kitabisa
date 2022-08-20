@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { Input, Select } from "./Input";
-import uniqid from "uniqid"
+import uniqid from "uniqid";
 
 class Experience extends Component {
   modalPopup() {
@@ -110,23 +110,50 @@ class AddSection extends Component {
     }
   }
 
+  deletePoint(event, id) {
+    const newList = [...this.state.points].filter((el) => el.id !== id);
+    this.setState({ points: newList });
+    this.props.handleChange(event, this.props.category, newList, this.props.id);
+  }
+
   pointsRender() {
-    const newList = this.props.form.points.map((element, index) => (
-      <Input
-        id={this.props.id}
-        name="points"
-        key={element.id}
-        value={element.value}
-        category={this.props.category}
-        handleChange={(event, category, value = null, id) => {
-          const newList = [...this.state.points];
-          newList[index].value = event.target.value;
-          this.setState({ points: newList });
-          this.props.handleChange(event, category, newList, id);
-        }}
-      />
+    return this.props.form.points.map((element, index) => (
+      <div key={element.id} className="flex gap-4 items-center">
+        <Input
+          id={this.props.id}
+          name="points"
+          value={element.value}
+          category={this.props.category}
+          handleChange={(event, category, value = null, id) => {
+            const newList = [...this.state.points];
+            newList[index].value = event.target.value;
+            this.setState({ points: newList });
+            this.props.handleChange(event, category, newList, id);
+          }}
+        />
+        <button
+          name="points"
+          type="button"
+          className="btn btn-ghost"
+          onClick={(event) => this.deletePoint(event, element.id)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 pointer-events-none"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
     ));
-    return newList;
   }
 
   render() {
@@ -215,7 +242,10 @@ class AddSection extends Component {
             name="points"
             className="btn btn-secondary btn-sm mt-4"
             onClick={(event) => {
-              const newList = [...this.state.points, {id: uniqid(), value: ""}];
+              const newList = [
+                ...this.state.points,
+                { id: uniqid(), value: "" },
+              ];
               this.setState({ points: newList });
               this.props.handleChange(event, category, newList, this.props.id);
             }}

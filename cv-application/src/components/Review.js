@@ -4,7 +4,7 @@ class Review extends Component {
   renderExperience() {
     const {experiences} = this.props.state
     return experiences.map((experience) => (
-      <li>
+      <li key={experience.id}>
         <div className="flex justify-between">
           <h3 className="text-lg font-bold">{experience.companyName}</h3>
           <div className="text-md font-bold">{experience.location}</div>
@@ -14,7 +14,7 @@ class Review extends Component {
           <div className="text-md font-bold">{experience.startYear} - {experience.endYear}</div>
         </div>
         <ul className="list-disc ml-10">
-          {experience.points.map((element) => <li>{element}</li>)}
+          {experience.points.map((element, index) => <li key={index}>{element.value}</li>)}
         </ul>
       </li>
     ))
@@ -23,7 +23,7 @@ class Review extends Component {
   renderEducation() {
     const {educations} = this.props.state
     return educations.map((education) => (
-      <li>
+      <li key={education.id}>
         <div className="flex justify-between">
           <h3 className="text-lg font-bold">{education.schoolName}</h3>
           <div className="text-md font-bold">{education.startYear} - {education.endYear}</div>
@@ -33,6 +33,13 @@ class Review extends Component {
           <div className="text-md font-bold">{education.grade? "GPA: ": ""} {education.grade}</div>
         </div>
       </li>
+    ))
+  }
+
+  renderInfo() {
+    const {infos} = this.props.state
+    return infos.points.map((info) => (
+      <li key={info.id}>{info.value}</li>
     ))
   }
 
@@ -47,7 +54,7 @@ class Review extends Component {
           <li>{general.phoneNumber}</li>
         </ul>
         <div className="w-full flex flex-col">
-          <h2 className="text-xl font-bold mb-2 border-b-2 border-black">
+          <h2 className="text-xl font-bold mb-4 border-b-2 border-black">
             PROFESSIONAL EXPERIENCE
           </h2>
           <ul className="flex flex-col gap-4">
@@ -55,11 +62,19 @@ class Review extends Component {
           </ul>
         </div>
         <div className="w-full flex flex-col">
-          <h2 className="text-xl font-bold mb-2 border-b-2 border-black">
+          <h2 className="text-xl font-bold mb-4 border-b-2 border-black">
             EDUCATION
           </h2>
           <ul className="flex flex-col gap-4">
             {this.renderEducation()}
+          </ul>
+        </div>
+        <div className="w-full flex flex-col">
+          <h2 className="text-xl font-bold mb-4 border-b-2 border-black">
+            ADDITIONAL INFORMATION
+          </h2>
+          <ul className="flex flex-col gap-2 list-disc ml-4">
+            {this.renderInfo()}
           </ul>
         </div>
       </div>
