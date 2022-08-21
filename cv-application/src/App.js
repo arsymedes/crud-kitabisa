@@ -1,5 +1,6 @@
 import { Component } from "react";
 import uniqid from "uniqid";
+import ReactToPrint from "react-to-print";
 import "./App.css";
 import General from "./components/General";
 import Education from "./components/Education";
@@ -13,11 +14,17 @@ class App extends Component {
 
     this.state = {
       tab: 4,
-      tabs: ["General", "Education", "Experience", "Additional Information", "Review"],
+      tabs: [
+        "General",
+        "Education",
+        "Experience",
+        "Additional Information",
+        "Review",
+      ],
       general: {
         fullName: "Ahmad Arsy",
         phoneNumber: "08117850750",
-        email: "arsyahmda12@gmail.com",
+        email: "arsyahmad12@gmail.com",
         address: "Jakarta, Indonesia",
       },
       educations: [
@@ -60,7 +67,8 @@ class App extends Component {
           points: [
             {
               id: uniqid(),
-              value: "Generated a total of 1 Billion Dollars in Revenue with 100% server UpTime using Microtransaction and Cryptocurrency",
+              value:
+                "Generated a total of 1 Billion Dollars in Revenue with 100% server UpTime using Microtransaction and Cryptocurrency",
             },
             {
               id: uniqid(),
@@ -68,7 +76,8 @@ class App extends Component {
             },
             {
               id: uniqid(),
-              value: "Generated a total of 1 morbillion dollars of revenue from the hit App, Morbin Time",
+              value:
+                "Generated a total of 1 morbillion dollars of revenue from the hit App, Morbin Time",
             },
           ],
         },
@@ -83,7 +92,8 @@ class App extends Component {
           points: [
             {
               id: uniqid(),
-              value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in ex faucibus, sollicitudin lectus vel, porta orci. Donec a feugiat tortor.",
+              value:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in ex faucibus, sollicitudin lectus vel, porta orci. Donec a feugiat tortor.",
             },
             {
               id: uniqid(),
@@ -91,7 +101,8 @@ class App extends Component {
             },
             {
               id: uniqid(),
-              value: "Teached students all around the world the importance of Quadratic Formula",
+              value:
+                "Teached students all around the world the importance of Quadratic Formula",
             },
           ],
         },
@@ -106,15 +117,18 @@ class App extends Component {
           points: [
             {
               id: uniqid(),
-              value: "Made a fun little app that tells you how o make a great CV from scracth, available on IOS",
+              value:
+                "Made a fun little app that tells you how o make a great CV from scracth, available on IOS",
             },
             {
               id: uniqid(),
-              value: "Fixed a critical bug in production that could've resulted in a catastrophic 1 Trillion Zimbabwe Dollars loss",
+              value:
+                "Fixed a critical bug in production that could've resulted in a catastrophic 1 Trillion Zimbabwe Dollars loss",
             },
             {
               id: uniqid(),
-              value: "Aliquam erat volutpat. Donec quis odio eu sem feugiat congue id in arcu. Duis nisi ex, volutpat sed dolor a, aliquam blandit felis.",
+              value:
+                "Aliquam erat volutpat. Donec quis odio eu sem feugiat congue id in arcu. Duis nisi ex, volutpat sed dolor a, aliquam blandit felis.",
             },
           ],
         },
@@ -133,23 +147,26 @@ class App extends Component {
         points: [
           {
             id: uniqid(),
-            value: "Technical Skills: HTML, CSS, JavaScript, React, SQL, Python, MongoDB, ExpressJS",
+            value:
+              "Technical Skills: HTML, CSS, JavaScript, React, SQL, Python, MongoDB, ExpressJS",
           },
           {
             id: uniqid(),
-            value: "Languages: Indonesian (Native Proficiency), English (Professional Proficiency)",
+            value:
+              "Languages: Indonesian (Native Proficiency), English (Professional Proficiency)",
           },
           {
             id: uniqid(),
-            value: "Awards: Gold Medal in ONMIPA Physics Olympiad, Honorable Mention in IdPHO Physics Olympiad in Russia",
+            value:
+              "Awards: Gold Medal in ONMIPA Physics Olympiad, Honorable Mention in IdPHO Physics Olympiad in Russia",
           },
-        ]
-      }
+        ],
+      },
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleListChange = this.handleListChange.bind(this);
-    this.deleteListChange = this.deleteListChange.bind(this)
+    this.deleteListChange = this.deleteListChange.bind(this);
     this.addRecord = this.addRecord.bind(this);
     this.next = this.next.bind(this);
     this.back = this.back.bind(this);
@@ -170,7 +187,7 @@ class App extends Component {
   handleListChange(event, category, value, id) {
     const target = event.target;
     const name = target.name;
-    
+
     let list = [...this.state[category]];
     let index = list.findIndex((el) => el.id === id);
     list[index] = {
@@ -269,14 +286,10 @@ class App extends Component {
         />
       );
     if (this.state.tab === 3)
-      return (
-        <Info handleChange={this.handleChange} forms={this.state.infos}/>
-      )
+      return <Info handleChange={this.handleChange} forms={this.state.infos} />;
     if (this.state.tab === 4)
       return (
-        <Review
-          state={this.state}
-        />
+        <Review state={this.state} ref={(el) => (this.componentRef = el)} />
       );
   }
 
@@ -290,9 +303,18 @@ class App extends Component {
           <button className="btn btn-ghost" onClick={this.back}>
             Back
           </button>
-          <button className="btn btn-primary" onClick={this.next}>
-            Save and Continue
-          </button>
+          {this.state.tab !== 4 ? (
+            <button className="btn btn-primary" onClick={this.next}>
+              Save and Continue
+            </button>
+          ) : (
+            <ReactToPrint
+              trigger={() => {
+                return <button className="btn btn-secondary">Print Pdf</button>;
+              }}
+              content={() => this.componentRef}
+            />
+          )}
         </div>
       </div>
     );

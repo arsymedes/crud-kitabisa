@@ -46,7 +46,7 @@ class Review extends Component {
   render() {
     const { general } = this.props.state;
     return (
-      <div className="box-border shadow-lg w-[48rem] aspect-[1/1.414] mt-8 p-16 flex flex-col items-center gap-5">
+      <div id="pdf" className="box-border shadow-lg w-[48rem] aspect-[1/1.414] mt-8 px-14 py-12 flex flex-col items-center gap-5">
         <h1 className="text-4xl font-bold">{general.fullName.toUpperCase()}</h1>
         <ul className="list-disc flex gap-7">
           <li className="list-none">{general.address}</li>
