@@ -13,7 +13,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      tab: 4,
+      tab: 0,
       tabs: [
         "General",
         "Education",
@@ -22,9 +22,42 @@ class App extends Component {
         "Review",
       ],
       general: {
+        fullName: "",
+        phoneNumber: "",
+        email: "",
+        address: "",
+      },
+      educations: [],
+      education: {
+        id: uniqid(),
+        schoolName: "",
+        fieldOfStudy: "",
+        degree: "",
+        grade: "",
+        startYear: "",
+        endYear: "",
+      },
+      experiences: [],
+      experience: {
+        id: uniqid(),
+        title: "",
+        companyName: "",
+        location: "",
+        employmentType: "Select an Option",
+        startYear: "",
+        endYear: "",
+        points: [],
+      },
+      infos: {
+        points: [],
+      },
+    };
+
+    this.example = {
+      general: {
         fullName: "Ahmad Arsy",
-        phoneNumber: "08117850750",
-        email: "arsyahmad12@gmail.com",
+        phoneNumber: "081269251234",
+        email: "arsymedes@gmail.com",
         address: "Jakarta, Indonesia",
       },
       educations: [
@@ -33,7 +66,7 @@ class App extends Component {
           schoolName: "University of Indonesia",
           fieldOfStudy: "Physics",
           degree: "Bachelor's",
-          grade: "3.94",
+          grade: "3.69",
           startYear: "2020",
           endYear: "2024",
         },
@@ -46,15 +79,6 @@ class App extends Component {
           endYear: "2020",
         },
       ],
-      education: {
-        id: uniqid(),
-        schoolName: "",
-        fieldOfStudy: "",
-        degree: "",
-        grade: "",
-        startYear: "",
-        endYear: "",
-      },
       experiences: [
         {
           id: uniqid(),
@@ -133,16 +157,6 @@ class App extends Component {
           ],
         },
       ],
-      experience: {
-        id: uniqid(),
-        title: "",
-        companyName: "",
-        location: "",
-        employmentType: "Select an Option",
-        startYear: "",
-        endYear: "",
-        points: [],
-      },
       infos: {
         points: [
           {
@@ -170,6 +184,7 @@ class App extends Component {
     this.addRecord = this.addRecord.bind(this);
     this.next = this.next.bind(this);
     this.back = this.back.bind(this);
+    this.setExample = this.setExample.bind(this);
   }
 
   handleChange(event, category, value) {
@@ -293,28 +308,51 @@ class App extends Component {
       );
   }
 
+  setExample() {
+    if (this.state.tab === 0) this.setState({ general: this.example.general });
+    if (this.state.tab === 1)
+      this.setState({ educations: this.example.educations });
+    if (this.state.tab === 2)
+      this.setState({ experiences: this.example.experiences });
+    if (this.state.tab === 3) this.setState({ infos: this.example.infos });
+  }
+
   render() {
     return (
       <div className="flex flex-col items-center py-8">
         <h1 className="text-7xl font-bold mb-12">CV Application</h1>
         {this.steps()}
         {this.mainContent()}
-        <div className="mt-4 self-end mr-14 flex gap-2">
-          <button className="btn btn-ghost" onClick={this.back}>
-            Back
-          </button>
+        <div className="mt-4 w-full justify-between px-20 flex">
           {this.state.tab !== 4 ? (
-            <button className="btn btn-primary" onClick={this.next}>
-              Save and Continue
+            <button
+              className="btn btn-secondary self-start"
+              onClick={this.setExample}
+            >
+              Set Example
             </button>
           ) : (
-            <ReactToPrint
-              trigger={() => {
-                return <button className="btn btn-secondary">Print Pdf</button>;
-              }}
-              content={() => this.componentRef}
-            />
+            ""
           )}
+          <div className="flex gap-2">
+            <button className="btn btn-ghost" onClick={this.back}>
+              Back
+            </button>
+            {this.state.tab !== 4 ? (
+              <button className="btn btn-primary" onClick={this.next}>
+                Save and Continue
+              </button>
+            ) : (
+              <ReactToPrint
+                trigger={() => {
+                  return (
+                    <button className="btn btn-secondary">Print Pdf</button>
+                  );
+                }}
+                content={() => this.componentRef}
+              />
+            )}
+          </div>
         </div>
       </div>
     );
