@@ -1,4 +1,4 @@
-import { Input } from "./components/Input";
+import { Input } from "./Input";
 import { Component } from "react";
 import uniqid from "uniqid";
 

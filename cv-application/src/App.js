@@ -5,7 +5,7 @@ import "./App.css";
 import General from "./components/General";
 import Education from "./components/Education";
 import Experience from "./components/Experience";
-import Info from "./Info";
+import Info from "./components/Info";
 import Review from "./components/Review";
 
 class App extends Component {
