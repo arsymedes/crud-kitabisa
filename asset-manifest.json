@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/kitabisa-crud/static/css/main.06aa5ee1.css",
-    "main.js": "/kitabisa-crud/static/js/main.86ddd9dd.js",
-    "index.html": "/kitabisa-crud/index.html",
-    "main.06aa5ee1.css.map": "/kitabisa-crud/static/css/main.06aa5ee1.css.map",
-    "main.86ddd9dd.js.map": "/kitabisa-crud/static/js/main.86ddd9dd.js.map"
+    "main.css": "/crud-kitabisa/static/css/main.06aa5ee1.css",
+    "main.js": "/crud-kitabisa/static/js/main.7f826a75.js",
+    "index.html": "/crud-kitabisa/index.html",
+    "main.06aa5ee1.css.map": "/crud-kitabisa/static/css/main.06aa5ee1.css.map",
+    "main.7f826a75.js.map": "/crud-kitabisa/static/js/main.7f826a75.js.map"
   },
   "entrypoints": [
     "static/css/main.06aa5ee1.css",
-    "static/js/main.86ddd9dd.js"
+    "static/js/main.7f826a75.js"
   ]
 }
